@@ -1,0 +1,34 @@
+{% extends 'layout/static_nav_bar.html' %}
+
+{% block title %}
+    Home Page
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>
+            Home Page
+        </h1>
+        <h3 class="page-header">
+            use flask templates inheritance to implement a common web ui framework
+        </h3>
+        <div class="content">
+            <ul>
+                <li>
+                    <a href="http://flask.pocoo.org/docs/0.12/">1. learn Flask</a>
+                </li>
+                <li>
+                    <a href="http://jinja.pocoo.org/docs/2.9/">2. learn Jinja2</a>
+                </li>
+                <li>
+                    <a href="http://getbootstrap.com/getting-started/">3. learn Bootstrap</a>
+                </li>
+                <li>
+                    <a href="http://flask.pocoo.org/docs/0.12/patterns/templateinheritance/#template-inheritance">4. Flask templates inheritance</a>
+                </li>
+                <li>
+                    <a href="http://flask.pocoo.org/docs/0.12/patterns/sqlite3/"> 5. use sqlite3 with Flask</a>
+                </li>
+            </ul>
+        </div>
+{% endblock %}
