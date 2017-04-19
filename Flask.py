@@ -7,7 +7,7 @@ import os
 app = Flask(__name__)
 
 
-# 普通路由
+# common router
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -18,20 +18,20 @@ def show_example(name):
     return render_template('examples/' + name + '_example.html')
 
 
-# 路由传参
-# 使用模板
+# pass parameter
+# use template
 @app.route('/users/<name>')
 def user(name):
     return render_template('user.html', name=name)
 
 
-# 指定参数类型
+# decide the type of the parameter
 @app.route('/articles/<string:article_name>')
 def article(article_name):
     return 'article: ' + article_name
 
 
-# 指定 HTTP Methods
+# use HTTP Methods
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
