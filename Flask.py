@@ -1,8 +1,9 @@
 from flask import Flask
 from flask import request
 from flask import render_template
+from flask import g
 import DB_Util as dbu
-import os
+from domain.user import User
 
 app = Flask(__name__)
 
@@ -19,7 +20,7 @@ def show_example(name):
 
 
 # 路由传参
-# 使用模板
+# 使用模板, 模板传参
 @app.route('/users/<name>')
 def user(name):
     return render_template('user.html', name=name)
@@ -40,18 +41,36 @@ def login():
         show_the_login_form()
 
 
+@app.route('/search', methods=['POST'])
+def search():
+    return 'key word: ' + request.form.get('search_key') + '<br> Find nothing.'
+
+
 def do_the_login():
     pass
+
+
+def do_the_register():
+    name = request.form.get('name')
+    passwd = request.form.get('passwd')
+    g.db.add(User(name=name, passwd=passwd))
+    g.db.commit()
 
 
 def show_the_login_form():
     pass
 
 
-def init_database():
-    if not os.path.exists(dbu.DATABASE):
-        dbu.init_db(app)
+@app.before_request
+def before_request():
+    g.db = dbu.get_sesion()
+
+
+@app.teardown_request
+def teardown_request(exception):
+    if hasattr(g, 'db'):
+        g.db.close()
+
 
 if __name__ == '__main__':
-    # init_database()
-    app.run()
+    app.run(port=5001)

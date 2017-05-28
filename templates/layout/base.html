@@ -7,19 +7,25 @@
         <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{#        title block#}
         <title>{% block title %}{% endblock %}</title>
     {% endblock %}
   </head>
   <body>
+
+{#    navigation bar#}
     <div id="nav">{% block nav %} {% endblock %}</div>
+
+{#    main content block#}
     <div id="content">{% block content %}{% endblock %}</div>
+
+{#    footer block#}
     <div id="footer" class="bottom footer text-center">
       {% block footer %}
         <br><br>
-        <h3>
-            &copy; Copyright 2017 by <a href="http://domain.invalid/">N4A</a>.
-        </h3>
+        <h3>&copy; Copyright 2017 by <a href="http://www.github.com/N4A/">N4A</a>.</h3>
       {% endblock %}
     </div>
+
   </body>
 </html>

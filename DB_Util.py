@@ -1,22 +1,25 @@
 import sqlite3
-from flask import g
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from domain.user import User
 
 DATABASE = 'static/database.db'
+sqlalchemy_db = 'sqlite:///' + DATABASE
 SCHEMA = 'static/schema.sql'
 
 
-def init_db(app, schema=SCHEMA):
+def init_db(schema=SCHEMA):
     """
     init the database with the schema
-    :param app: Flask app
     :param schema: schema file path
     :return:
     """
-    with app.app_context():
-        db = get_db()
-        with app.open_resource(schema, mode='r') as f:
-            db.cursor().executescript(f.read())
-        db.commit()
+    db = get_db()
+    c = db.cursor()
+    with open(schema, mode='r') as f:
+        c.executescript(f.read())
+    db.commit()
+    db.close()
 
 
 def get_db(db_url=DATABASE):
@@ -24,26 +27,33 @@ def get_db(db_url=DATABASE):
     get a unique db connection
     :return: a db connection object
     """
-    db = getattr(g, '_database', None)
-    if db is None:
-        db = g._database = sqlite3.connect(db_url)
+    db = sqlite3.connect(db_url)
     db.row_factory = sqlite3.Row
     return db
 
 
-def db_query(db, query_sql, args=(), one=False):
-    """
-    execute a query sql, the db is usually the default one _DATABASE
-    :param query_sql:
-    :param args:
-    :param one: decide whether to return one record or not
-    :param db: decide to query which db, the default one is _DATABASE
-    :return:
-    """
-    cur = db.execute(query_sql, args)
-    rv = cur.fetchall()
-    cur.close()
-    return (rv[0] if rv else None) if one else rv
+def get_sesion(url=sqlalchemy_db):
+    # 初始化数据库连接:
+    engine = create_engine(url)
+    # 创建DBSession类型:
+    return sessionmaker(bind=engine)()
 
 
+# test db
+if __name__ == '__main__':
+    # init_db,!!!!! delete the old one and create the new one
+    init_db()
+    print('create db: ok')
+    # test sqlalchemy
+    sess = get_sesion()
+    sess.add(User(id=1, name='Test', passwd='Test'))
+    sess.commit()
+    print('test insert user(name=Test, passwd=Test): ok')
 
+    user = sess.query(User).one()
+    print('test reading user from the database: ')
+    print('user: ', user)
+    print('print message of the user: ')
+    print('name: ', user.name, ', passwd', user.passwd)
+    sess.close()
+    print('The database works well.')

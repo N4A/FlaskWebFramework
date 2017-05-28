@@ -1,6 +1,4 @@
-.gradle
-/.idea
-.DS_Store
-build
-out
-/_pycache_
+
+.idea/
+__pycache__/
+

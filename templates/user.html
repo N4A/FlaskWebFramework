@@ -1,4 +1,4 @@
-{% extends 'layout/static_nav_bar.html' %}
+{% extends 'layout/base.html' %}
 
 {% block title %}
     User Info
@@ -10,4 +10,7 @@
     {% else %}
       <h1>Hello, World!</h1>
     {% endif %}
+{% endblock %}
+
+{% block footer %}
 {% endblock %}
