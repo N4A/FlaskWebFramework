@@ -15,7 +15,7 @@ use flask templates inheritance to implement a common web ui framework
 
 ## related docs
 
-1. [my notes](./docs/Flask.md)
+1. [my notes](./docs/Flask_notes.md)
 
 2. [Learn Flask](http://flask.pocoo.org/docs/0.12/)
 
