@@ -10,7 +10,7 @@ use flask templates inheritance to implement a common web ui framework
 2. install Flask: pip3 install Flask
 3. install sqlite3: pip3 install sqlite3
 4. install sqlalchemy: pip3 install  sqlalchemy
-5. init database: python run DB_Util.py
+5. init database: python DB_Util.py
 6. run: python Flask.py
 
 ## related docs
